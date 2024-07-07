@@ -1,26 +1,68 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { MultiSelect } from "react-multi-select-component";
+import { industries_sic_codes, sic_codes } from "./assets/sic_codes";
 
 function App() {
+  const [industry, setIndustry] = useState(false);
+
+  useEffect(() => {
+    console.log(industry);
+  }, [industry]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div
+        className="header"
+        style={{
+          height: "5vh",
+          width: "100vw",
+          backgroundColor: "#343A40",
+        }}
+      ></div>
+
+      <div
+        style={{
+          width: "35vw",
+          height: "95vh",
+          backgroundColor: "#F5F5F5",
+        }}
+      >
+        <Button
+          variant="contained"
+          fullWidth
+          endIcon={!industry ? <AddIcon /> : <RemoveIcon />}
+          onClick={() => {
+            setIndustry(!industry);
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          Industry
+        </Button>
+        {industry && <IndustrySearch />}
+      </div>
     </div>
   );
 }
+// Code: 1110;
+// Description;
+
+export const IndustrySearch = () => {
+  const [selected, setSelected] = useState([]);
+
+  return (
+    <div>
+      <h1>Select industries</h1>
+      <pre>{JSON.stringify(selected)}</pre>
+      <MultiSelect
+        options={industries_sic_codes}
+        value={selected}
+        onChange={setSelected}
+        labelledBy="Select"
+      />
+    </div>
+  );
+};
 
 export default App;
