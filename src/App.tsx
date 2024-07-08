@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { sic_codes } from "./assets/sic_codes";
 import { FilterBar } from "./components/FilterBar";
 import { Dashboard } from "./components/Dashboard";
 
+export type Data = {
+       sic_codes: string[],
+    _id: string
+    companyName: string,
+    companyNumber: string,
+    company_status:string ,
+    filePath:string
+    numberOfEmployees: number,
+    profitAndLoss: {[key:string]: string}[],
+ 
+  
+}
 function App() {
+  const [data, setData] = useState<Data[]>([]);
   return (
     <div className="App">
       <div
@@ -23,8 +36,8 @@ function App() {
           flexDirection: "row",
         }}
       >
-        <FilterBar />
-        <Dashboard />
+        <FilterBar setData={setData} />
+        <Dashboard data={data} />
       </div>
     </div>
   );

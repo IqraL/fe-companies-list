@@ -3,11 +3,12 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { IndustrySearch } from "./IndustrySearch";
+import { Data } from "../App";
 
-export const FilterBar = () => {
+export const FilterBar = ({ setData }: {setData: React.Dispatch<React.SetStateAction<Data[]>>}) => {
   const [industry, setIndustry] = useState(false);
   const [selectedIndustries, setSelectedIndustries] = useState<
-    { label: string; value: number; }[]
+    { label: string; value: number }[]
   >([]);
   useEffect(() => {
     const getBySicCodes = async () => {
@@ -27,6 +28,7 @@ export const FilterBar = () => {
         }
 
         const result = await response.json();
+        setData(result);
         console.log("result", result);
       } catch (error) {
         console.error("Error during fetch operation:", error);
@@ -56,7 +58,8 @@ export const FilterBar = () => {
       {industry && (
         <IndustrySearch
           selected={selectedIndustries}
-          setSelected={setSelectedIndustries} />
+          setSelected={setSelectedIndustries}
+        />
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import { Data } from "../App";
 
 const mockData = [
   {
@@ -27,13 +28,31 @@ const rowStyle = {
   wordBreak: "normal",
 };
 
-export const Dashboard = () => {
+const headerStyle = {
+  backgroundColor: "#9b9b9b",
+  borderColor: "black",
+  borderStyle: "solid",
+  borderWidth: "1px",
+  fontFamily: "Arial, sans-serif",
+  fontSize: "14px",
+  fontWeight: "normal",
+  overflow: "hidden",
+  padding: "10px 5px",
+  textAlign: "left",
+  verticalAlign: "top",
+  wordBreak: "normal",
+};
+export const Dashboard = ({data}:{data:Data[]}) => {
   return (
     <div
       style={{
         width: "100%",
         height: "100%",
         backgroundColor: "#F5F5F5",
+        display: "flex",
+        justifyContent: "center",
+        marginTop: "25px" 
+
       }}
     >
       <table
@@ -51,19 +70,9 @@ export const Dashboard = () => {
             ].map((header, index) => (
               <th
                 key={index}
+                //@ts-ignore
                 style={{
-                  backgroundColor: "#9b9b9b",
-                  borderColor: "black",
-                  borderStyle: "solid",
-                  borderWidth: "1px",
-                  fontFamily: "Arial, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "normal",
-                  overflow: "hidden",
-                  padding: "10px 5px",
-                  textAlign: "left",
-                  verticalAlign: "top",
-                  wordBreak: "normal",
+                  ...headerStyle,
                 }}
               >
                 {header}
@@ -72,11 +81,8 @@ export const Dashboard = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            {mockData.map((companyData, index) => (
-              //@ts-ignore
-              <>
-                {" "}
+            {data.map((companyData, index) => (
+              <tr>
                 <Cell
                   key={`${companyData.companyNumber}_${companyData.companyName}}`}
                   value={companyData.companyName}
@@ -97,9 +103,8 @@ export const Dashboard = () => {
                   key={`${companyData.companyNumber}_${companyData.sic_codes}}`}
                   value={`${companyData.sic_codes}`}
                 />
-              </>
+              </tr>
             ))}
-          </tr>
         </tbody>
       </table>
     </div>
