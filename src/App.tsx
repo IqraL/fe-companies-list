@@ -1,17 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { MultiSelect } from "react-multi-select-component";
-import { industries_sic_codes, sic_codes } from "./assets/sic_codes";
+import React from "react";
+import { sic_codes } from "./assets/sic_codes";
+import { FilterBar } from "./components/FilterBar";
+import { Dashboard } from "./components/Dashboard";
 
 function App() {
-  const [industry, setIndustry] = useState(false);
-
-  useEffect(() => {
-    console.log(industry);
-  }, [industry]);
-
   return (
     <div className="App">
       <div
@@ -22,47 +14,22 @@ function App() {
           backgroundColor: "#343A40",
         }}
       ></div>
-
       <div
         style={{
-          width: "35vw",
-          height: "95vh",
+          width: "100%",
+          height: "100%",
           backgroundColor: "#F5F5F5",
+          display: "flex",
+          flexDirection: "row",
         }}
       >
-        <Button
-          variant="contained"
-          fullWidth
-          endIcon={!industry ? <AddIcon /> : <RemoveIcon />}
-          onClick={() => {
-            setIndustry(!industry);
-          }}
-        >
-          Industry
-        </Button>
-        {industry && <IndustrySearch />}
+        <FilterBar />
+        <Dashboard />
       </div>
     </div>
   );
 }
-// Code: 1110;
-// Description;
-
-export const IndustrySearch = () => {
-  const [selected, setSelected] = useState([]);
-
-  return (
-    <div>
-      <h1>Select industries</h1>
-      <pre>{JSON.stringify(selected)}</pre>
-      <MultiSelect
-        options={industries_sic_codes}
-        value={selected}
-        onChange={setSelected}
-        labelledBy="Select"
-      />
-    </div>
-  );
-};
 
 export default App;
+
+
