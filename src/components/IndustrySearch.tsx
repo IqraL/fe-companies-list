@@ -24,7 +24,8 @@ export const IndustrySearch = ({
         options={industries_sic_codes}
         value={selected}
         onChange={setSelected}
-        labelledBy="Select" />
+        labelledBy="Select" 
+        />
     </div>
   );
 };

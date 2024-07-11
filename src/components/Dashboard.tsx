@@ -1,20 +1,6 @@
 import React from "react";
 import { Data } from "../App";
 
-const mockData = [
-  {
-    companyName: "NORTHWICH VICTORIA CLUB COMPANY LIMITED",
-    companyNumber: "00011462",
-    company_status: "active",
-    filePath:
-      "jan2023-split-folder/folder_1/Prod224_0001_00011462_20221231.html",
-    numberOfEmployees: 5,
-    profitAndLoss: [],
-    sic_codes: ["68209"],
-    _id: "667f1172236ce12295836e34",
-  },
-];
-
 const rowStyle = {
   borderColor: "black",
   borderStyle: "solid",
@@ -22,10 +8,13 @@ const rowStyle = {
   fontFamily: "Arial, sans-serif",
   fontSize: "14px",
   overflow: "hidden",
-  padding: "10px 5px",
+  padding: "0 5px", // Adjusted padding to fit the height
   textAlign: "left",
-  verticalAlign: "top",
+  verticalAlign: "middle", // Vertically align text to the middle
   wordBreak: "normal",
+  height: "20px", // Set row height to 20px
+  lineHeight: "20px", // Ensures text is vertically centered
+  boxSizing: "border-box" // Ensures padding and border are included in the height
 };
 
 const headerStyle = {
@@ -37,26 +26,31 @@ const headerStyle = {
   fontSize: "14px",
   fontWeight: "normal",
   overflow: "hidden",
-  padding: "10px 5px",
+  padding: "0 5px", // Adjusted padding to fit the height
   textAlign: "left",
-  verticalAlign: "top",
+  verticalAlign: "middle", // Vertically align text to the middle
   wordBreak: "normal",
+  height: "20px", // Set header height to 20px
+  lineHeight: "20px", // Ensures text is vertically centered
+  boxSizing: "border-box" // Ensures padding and border are included in the height
 };
+
 export const Dashboard = ({data}:{data:Data[]}) => {
   return (
     <div
       style={{
         width: "100%",
-        height: "100%",
-        backgroundColor: "#F5F5F5",
         display: "flex",
-        justifyContent: "center",
-        marginTop: "25px" 
-
+        justifyContent: "left",
+        marginTop: "25px",
+        marginLeft: "25px",
       }}
     >
       <table
-        style={{ borderCollapse: "collapse", borderSpacing: 0 }}
+        style={{
+          borderCollapse: "collapse",
+          width: "auto",
+        }}
         className="tg"
       >
         <thead>
@@ -81,30 +75,30 @@ export const Dashboard = ({data}:{data:Data[]}) => {
           </tr>
         </thead>
         <tbody>
-            {data.map((companyData, index) => (
-              <tr>
-                <Cell
-                  key={`${companyData.companyNumber}_${companyData.companyName}}`}
-                  value={companyData.companyName}
-                />
-                <Cell
-                  key={`${companyData.companyNumber}_${companyData.companyNumber}}`}
-                  value={companyData.companyNumber}
-                />
-                <Cell
-                  key={`${companyData.companyNumber}_${companyData.company_status}}`}
-                  value={companyData.company_status}
-                />
-                <Cell
-                  key={`${companyData.companyNumber}_${companyData.numberOfEmployees}}`}
-                  value={`${companyData.numberOfEmployees}`}
-                />
-                <Cell
-                  key={`${companyData.companyNumber}_${companyData.sic_codes}}`}
-                  value={`${companyData.sic_codes}`}
-                />
-              </tr>
-            ))}
+          {data.map((companyData, index) => (
+           <tr key={index} style={{ height: "20px" }}>
+              <Cell
+                key={`${companyData.companyNumber}_${companyData.companyName}}`}
+                value={companyData.companyName}
+              />
+              <Cell
+                key={`${companyData.companyNumber}_${companyData.companyNumber}}`}
+                value={companyData.companyNumber}
+              />
+              <Cell
+                key={`${companyData.companyNumber}_${companyData.company_status}}`}
+                value={companyData.company_status}
+              />
+              <Cell
+                key={`${companyData.companyNumber}_${companyData.numberOfEmployees}}`}
+                value={`${companyData.numberOfEmployees}`}
+              />
+              <Cell
+                key={`${companyData.companyNumber}_${companyData.sic_codes}}`}
+                value={`${companyData.sic_codes}`}
+              />
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

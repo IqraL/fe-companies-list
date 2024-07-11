@@ -4,17 +4,15 @@ import { FilterBar } from "./components/FilterBar";
 import { Dashboard } from "./components/Dashboard";
 
 export type Data = {
-       sic_codes: string[],
-    _id: string
-    companyName: string,
-    companyNumber: string,
-    company_status:string ,
-    filePath:string
-    numberOfEmployees: number,
-    profitAndLoss: {[key:string]: string}[],
- 
-  
-}
+  sic_codes: string[];
+  _id: string;
+  companyName: string;
+  companyNumber: string;
+  company_status: string;
+  filePath: string;
+  numberOfEmployees: number;
+  profitAndLoss: { [key: string]: string }[];
+};
 function App() {
   const [data, setData] = useState<Data[]>([]);
   return (
@@ -31,18 +29,20 @@ function App() {
         style={{
           width: "100%",
           height: "100%",
-          backgroundColor: "#F5F5F5",
-          display: "flex",
-          flexDirection: "row",
+          display: "grid",
+          gridTemplateColumns: "2fr 9fr",
         }}
       >
-        <FilterBar setData={setData} />
-        <Dashboard data={data} />
+        <div
+        >
+          <FilterBar setData={setData} />
+        </div>
+        <div>
+          <Dashboard data={data} />
+        </div>
       </div>
     </div>
   );
 }
 
 export default App;
-
-
