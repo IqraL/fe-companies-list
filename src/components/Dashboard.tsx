@@ -32,7 +32,8 @@ const headerStyle = {
   wordBreak: "normal",
   height: "20px", // Set header height to 20px
   lineHeight: "20px", // Ensures text is vertically centered
-  boxSizing: "border-box" // Ensures padding and border are included in the height
+  boxSizing: "border-box", // Ensures padding and border are included in the height
+  width: "180px"
 };
 
 export const Dashboard = ({data}:{data:Data[]}) => {
@@ -54,7 +55,7 @@ export const Dashboard = ({data}:{data:Data[]}) => {
         className="tg"
       >
         <thead>
-          <tr>
+          <tr >
             {[
               "Company name",
               "Company number",
@@ -62,7 +63,7 @@ export const Dashboard = ({data}:{data:Data[]}) => {
               "Number of employees",
               "Industry",
             ].map((header, index) => (
-              <th
+              <th 
                 key={index}
                 //@ts-ignore
                 style={{
@@ -76,7 +77,7 @@ export const Dashboard = ({data}:{data:Data[]}) => {
         </thead>
         <tbody>
           {data.map((companyData, index) => (
-           <tr key={index} style={{ height: "20px" }}>
+            <tr key={index} style={{ height: "20px" }}>
               <Cell
                 key={`${companyData.companyNumber}_${companyData.companyName}}`}
                 value={companyData.companyName}
