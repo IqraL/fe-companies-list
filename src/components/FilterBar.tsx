@@ -8,9 +8,14 @@ import { Data } from "../App";
 
 export const FilterBar = ({
   setData,
+  setMaxPage,
+  page,
 }: {
   setData: React.Dispatch<React.SetStateAction<Data[]>>;
+  setMaxPage: React.Dispatch<React.SetStateAction<number>>;
+  page: number;
 }) => {
+  const PAGE_SIZE = 20;
   const [industry, setIndustry] = useState(false);
   const [employees, setEmployees] = useState(false);
 
@@ -28,7 +33,7 @@ export const FilterBar = ({
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ sic_codes: codes }),
+          body: JSON.stringify({ sic_codes: codes, page, pageSize: PAGE_SIZE }),
         });
 
         if (!response.ok) {
@@ -36,14 +41,15 @@ export const FilterBar = ({
         }
 
         const result = await response.json();
-        setData(result);
+        setData(result.results);
+        setMaxPage(result.maxPage);
         console.log("result", result);
       } catch (error) {
         console.error("Error during fetch operation:", error);
       }
     };
     getBySicCodes();
-  }, [selectedIndustries]);
+  }, [selectedIndustries, page]);
 
   return (
     <div

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { sic_codes } from "./assets/sic_codes";
 import { FilterBar } from "./components/FilterBar";
 import { Dashboard } from "./components/Dashboard";
+import Pagination from "@mui/material/Pagination";
 
 export type Data = {
   sic_codes: string[];
@@ -15,6 +16,9 @@ export type Data = {
 };
 function App() {
   const [data, setData] = useState<Data[]>([]);
+  const [maxPage, setMaxPage] = useState<number>(1)
+  const [page, setPage] = useState<number>(1)
+  
   return (
     <div className="App">
       <div
@@ -33,12 +37,18 @@ function App() {
           gridTemplateColumns: "2fr 9fr",
         }}
       >
-        <div
-        >
-          <FilterBar setData={setData} />
+        <div>
+          <FilterBar setData={setData} setMaxPage={setMaxPage} page={page} />
         </div>
         <div>
           <Dashboard data={data} />
+          <Pagination
+            count={maxPage}
+            color="primary"
+            onChange={(_, page) => {
+              setPage(page);
+            }}
+          />
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Data } from "../App";
+import SwapVertIcon from "@mui/icons-material/SwapVert";
 
 const rowStyle = {
   borderColor: "black",
@@ -14,7 +15,7 @@ const rowStyle = {
   wordBreak: "normal",
   height: "20px", // Set row height to 20px
   lineHeight: "20px", // Ensures text is vertically centered
-  boxSizing: "border-box" // Ensures padding and border are included in the height
+  boxSizing: "border-box", // Ensures padding and border are included in the height
 };
 
 const headerStyle = {
@@ -33,10 +34,10 @@ const headerStyle = {
   height: "20px", // Set header height to 20px
   lineHeight: "20px", // Ensures text is vertically centered
   boxSizing: "border-box", // Ensures padding and border are included in the height
-  width: "180px"
+  width: "180px",
 };
 
-export const Dashboard = ({data}:{data:Data[]}) => {
+export const Dashboard = ({ data }: { data: Data[] }) => {
   return (
     <div
       style={{
@@ -55,7 +56,7 @@ export const Dashboard = ({data}:{data:Data[]}) => {
         className="tg"
       >
         <thead>
-          <tr >
+          <tr>
             {[
               "Company name",
               "Company number",
@@ -63,14 +64,25 @@ export const Dashboard = ({data}:{data:Data[]}) => {
               "Number of employees",
               "Industry",
             ].map((header, index) => (
-              <th 
+              <th
                 key={index}
                 //@ts-ignore
                 style={{
                   ...headerStyle,
                 }}
               >
-                {header}
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  {header}
+                  <div
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    <SwapVertIcon />
+                  </div>
+                </div>
               </th>
             ))}
           </tr>
