@@ -16,9 +16,9 @@ export type Data = {
 };
 function App() {
   const [data, setData] = useState<Data[]>([]);
-  const [maxPage, setMaxPage] = useState<number>(1)
-  const [page, setPage] = useState<number>(1)
-  
+  const [maxPage, setMaxPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
+
   return (
     <div className="App">
       <div
@@ -40,15 +40,22 @@ function App() {
         <div>
           <FilterBar setData={setData} setMaxPage={setMaxPage} page={page} />
         </div>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <Dashboard data={data} />
-          <Pagination
-            count={maxPage}
-            color="primary"
-            onChange={(_, page) => {
-              setPage(page);
-            }}
-          />
+          <div style={{ display: "flex", marginTop: 30 }}>
+            <Pagination
+              count={maxPage}
+              color="primary"
+              onChange={(_, page) => {
+                setPage(page);
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

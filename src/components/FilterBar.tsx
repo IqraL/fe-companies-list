@@ -15,7 +15,7 @@ export const FilterBar = ({
   setMaxPage: React.Dispatch<React.SetStateAction<number>>;
   page: number;
 }) => {
-  const PAGE_SIZE = 20;
+  const PAGE_SIZE = 15;
   const [industry, setIndustry] = useState(false);
   const [employees, setEmployees] = useState(false);
 
