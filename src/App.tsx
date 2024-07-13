@@ -44,6 +44,7 @@ function App() {
           style={{
             display: "flex",
             flexDirection: "column",
+            maxHeight:  "100vh",
           }}
         >
           {!data.length ? (

@@ -114,7 +114,7 @@ export const Dashboard = ({ data }: { data: Data[] }) => {
                     const sicCodeObj = sic_codes.find(
                       (sicCodeObj: any) => Number(sicCodeObj.Code) === Number(sicCode)
                     );
-                    return sicCodeObj ? sicCodeObj.FDescription : "";
+                    return sicCodeObj ? sicCodeObj.Description : "";
                   })
                   .join(", ")}
               />
