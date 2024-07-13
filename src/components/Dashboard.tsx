@@ -1,6 +1,7 @@
 import React from "react";
 import { Data } from "../App";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
+import { sic_codes } from "../assets/sic_codes";
 
 const rowStyle = {
   borderColor: "black",
@@ -108,7 +109,14 @@ export const Dashboard = ({ data }: { data: Data[] }) => {
               />
               <Cell
                 key={`${companyData.companyNumber}_${companyData.sic_codes}}`}
-                value={`${companyData.sic_codes}`}
+                value={companyData.sic_codes
+                  .map((sicCode) => {
+                    const sicCodeObj = sic_codes.find(
+                      (sicCodeObj: any) => Number(sicCodeObj.Code) === Number(sicCode)
+                    );
+                    return sicCodeObj ? sicCodeObj.FDescription : "";
+                  })
+                  .join(", ")}
               />
             </tr>
           ))}

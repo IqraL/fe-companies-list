@@ -5,6 +5,51 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { IndustrySearch } from "./IndustrySearch";
 import { Data } from "../App";
+const PAGE_SIZE = 15;
+
+const getBySicCodes = async ({
+  selectedIndustries,
+  page,
+  setData,
+  setMaxPage,
+  isActive,
+  isDissolved,
+}: {
+  selectedIndustries: { label: string; value: number }[];
+  page: number;
+  setData: React.Dispatch<React.SetStateAction<Data[]>>;
+  setMaxPage: React.Dispatch<React.SetStateAction<number>>;
+  isActive: boolean;
+  isDissolved: boolean;
+}) => {
+  const codes = selectedIndustries.map((si) => "" + si.value + "");
+
+  try {
+    const response = await fetch("http://localhost:3000/filter_sec_codes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sic_codes: codes,
+        page,
+        pageSize: PAGE_SIZE,
+        isActive,
+        isDissolved,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    setData(result.results);
+    setMaxPage(result.maxPage);
+  } catch (error) {
+    console.error("Error during fetch operation:", error);
+  }
+};
 
 export const FilterBar = ({
   setData,
@@ -15,8 +60,11 @@ export const FilterBar = ({
   setMaxPage: React.Dispatch<React.SetStateAction<number>>;
   page: number;
 }) => {
-  const PAGE_SIZE = 15;
   const [industry, setIndustry] = useState(false);
+
+  const [isActive, setIsActive] = useState(true);
+  const [isDissolved, setIsDissolved] = useState(true);
+
   const [employees, setEmployees] = useState(false);
 
   const [selectedIndustries, setSelectedIndustries] = useState<
@@ -24,32 +72,15 @@ export const FilterBar = ({
   >([]);
 
   useEffect(() => {
-    const getBySicCodes = async () => {
-      const codes = selectedIndustries.map((si) => "" + si.value + "");
-
-      try {
-        const response = await fetch("http://localhost:3000/filter_sec_codes", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ sic_codes: codes, page, pageSize: PAGE_SIZE }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        setData(result.results);
-        setMaxPage(result.maxPage);
-        console.log("result", result);
-      } catch (error) {
-        console.error("Error during fetch operation:", error);
-      }
-    };
-    getBySicCodes();
-  }, [selectedIndustries, page]);
+    getBySicCodes({
+      selectedIndustries,
+      page,
+      setData,
+      setMaxPage,
+      isActive,
+      isDissolved,
+    });
+  }, [selectedIndustries, page, isActive, isDissolved]);
 
   return (
     <div
@@ -83,28 +114,35 @@ export const FilterBar = ({
           />
         )}
       </div>
-      {/* <div
+      <div
         style={{
+          display: "flex",
           marginTop: "10px",
         }}
       >
         <Button
+          size="small"
           variant="contained"
           fullWidth
-          endIcon={!employees ? <AddIcon /> : <RemoveIcon />}
           onClick={() => {
-            setEmployees(!employees);
+            setIsActive(!isActive);
           }}
+          color={isActive ? "success" : "primary"}
         >
-          Number of employees
+          active
         </Button>
-        {employees && (
-          <EmployeeSelector
-          // selected={selectedIndustries}
-          // setSelected={setSelectedIndustries}
-          />
-        )}
-      </div> */}
+        <Button
+          size="small"
+          variant="contained"
+          fullWidth
+          onClick={() => {
+            setIsDissolved(!isDissolved);
+          }}
+          color={isDissolved ? "success" : "primary"}
+        >
+          dissolved
+        </Button>
+      </div>
     </div>
   );
 };

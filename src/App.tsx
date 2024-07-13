@@ -46,16 +46,22 @@ function App() {
             flexDirection: "column",
           }}
         >
-          <Dashboard data={data} />
-          <div style={{ display: "flex", marginTop: 30 }}>
-            <Pagination
-              count={maxPage}
-              color="primary"
-              onChange={(_, page) => {
-                setPage(page);
-              }}
-            />
-          </div>
+          {!data.length ? (
+            <h1>Please select an industry</h1>
+          ) : (
+            <>
+              <Dashboard data={data} />
+              <div style={{ display: "flex", marginTop: 30 }}>
+                <Pagination
+                  count={maxPage}
+                  color="primary"
+                  onChange={(_, page) => {
+                    setPage(page);
+                  }}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
