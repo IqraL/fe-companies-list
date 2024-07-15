@@ -5,6 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { IndustrySearch } from "./IndustrySearch";
 import { Data } from "../App";
+import { SortDirection, SortType } from "../types";
 const PAGE_SIZE = 15;
 
 const getBySicCodes = async ({
@@ -14,6 +15,8 @@ const getBySicCodes = async ({
   setMaxPage,
   isActive,
   isDissolved,
+  sort,
+  sortDirection,
 }: {
   selectedIndustries: { label: string; value: number }[];
   page: number;
@@ -21,6 +24,8 @@ const getBySicCodes = async ({
   setMaxPage: React.Dispatch<React.SetStateAction<number>>;
   isActive: boolean;
   isDissolved: boolean;
+  sortDirection: SortDirection;
+  sort: SortType;
 }) => {
   const codes = selectedIndustries.map((si) => "" + si.value + "");
 
@@ -36,6 +41,8 @@ const getBySicCodes = async ({
         pageSize: PAGE_SIZE,
         isActive,
         isDissolved,
+        sortDirection,
+        sort,
       }),
     });
 
@@ -55,10 +62,14 @@ export const FilterBar = ({
   setData,
   setMaxPage,
   page,
+  sortDirection,
+  sort,
 }: {
   setData: React.Dispatch<React.SetStateAction<Data[]>>;
   setMaxPage: React.Dispatch<React.SetStateAction<number>>;
   page: number;
+  sortDirection: SortDirection;
+  sort: SortType;
 }) => {
   const [industry, setIndustry] = useState(false);
 
@@ -79,8 +90,10 @@ export const FilterBar = ({
       setMaxPage,
       isActive,
       isDissolved,
+      sortDirection,
+      sort,
     });
-  }, [selectedIndustries, page, isActive, isDissolved]);
+  }, [selectedIndustries, page, isActive, isDissolved, sortDirection, sort]);
 
   return (
     <div

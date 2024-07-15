@@ -2,6 +2,7 @@ import React from "react";
 import { Data } from "../App";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import { sic_codes } from "../assets/sic_codes";
+import { SortDirection, SortType } from "../types";
 
 const rowStyle = {
   borderColor: "black",
@@ -38,7 +39,19 @@ const headerStyle = {
   width: "180px",
 };
 
-export const Dashboard = ({ data }: { data: Data[] }) => {
+export const Dashboard = ({
+  data,
+  setSort,
+  setSortDirection,
+  sort,
+  sortDirection,
+}: {
+  data: Data[];
+  setSort: React.Dispatch<React.SetStateAction<SortType>>;
+  setSortDirection: React.Dispatch<React.SetStateAction<SortDirection>>;
+  sort: SortType;
+  sortDirection: SortDirection;
+}) => {
   return (
     <div
       style={{
@@ -73,7 +86,10 @@ export const Dashboard = ({ data }: { data: Data[] }) => {
                 }}
               >
                 <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
                 >
                   {header}
                   <div
@@ -81,7 +97,30 @@ export const Dashboard = ({ data }: { data: Data[] }) => {
                       cursor: "pointer",
                     }}
                   >
-                    <SwapVertIcon />
+                    {header === "Company name" ? (
+                      <SwapVertIcon
+                        onClick={() => {
+                          setSort("companyName");
+                          setSortDirection(sortDirection === 1 ? -1 : 1);
+                        }}
+                      />
+                    ) : null}
+                    {header === "Number of employees" ? (
+                      <SwapVertIcon
+                        onClick={() => {
+                          setSort("numberOfEmployees");
+                          setSortDirection(sortDirection === 1 ? -1 : 1);
+                        }}
+                      />
+                    ) : null}
+                    {header === "Industry" ? (
+                      <SwapVertIcon
+                        onClick={() => {
+                          setSort("sic_codes");
+                          setSortDirection(sortDirection === 1 ? -1 : 1);
+                        }}
+                      />
+                    ) : null}
                   </div>
                 </div>
               </th>
@@ -112,7 +151,8 @@ export const Dashboard = ({ data }: { data: Data[] }) => {
                 value={companyData.sic_codes
                   .map((sicCode) => {
                     const sicCodeObj = sic_codes.find(
-                      (sicCodeObj: any) => Number(sicCodeObj.Code) === Number(sicCode)
+                      (sicCodeObj: any) =>
+                        Number(sicCodeObj.Code) === Number(sicCode)
                     );
                     return sicCodeObj ? sicCodeObj.Description : "";
                   })

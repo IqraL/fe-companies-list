@@ -3,6 +3,7 @@ import { sic_codes } from "./assets/sic_codes";
 import { FilterBar } from "./components/FilterBar";
 import { Dashboard } from "./components/Dashboard";
 import Pagination from "@mui/material/Pagination";
+import { SortDirection, SortType } from "./types";
 
 export type Data = {
   sic_codes: string[];
@@ -18,6 +19,8 @@ function App() {
   const [data, setData] = useState<Data[]>([]);
   const [maxPage, setMaxPage] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
+  const [sort, setSort] = useState<SortType>("companyName");
+  const [sortDirection, setSortDirection] = useState<SortDirection>(1);
 
   return (
     <div className="App">
@@ -38,21 +41,39 @@ function App() {
         }}
       >
         <div>
-          <FilterBar setData={setData} setMaxPage={setMaxPage} page={page} />
+          <FilterBar
+            setData={setData}
+            setMaxPage={setMaxPage}
+            page={page}
+            sort={sort}
+            sortDirection={sortDirection}
+          />
         </div>
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            maxHeight:  "100vh",
+            maxHeight: "60vh",
           }}
         >
           {!data.length ? (
             <h1>Please select an industry</h1>
           ) : (
-            <>
-              <Dashboard data={data} />
-              <div style={{ display: "flex", marginTop: 30 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "60vh",
+              }}
+            >
+              <Dashboard
+                data={data}
+                setSort={setSort}
+                setSortDirection={setSortDirection}
+                sort={sort}
+                sortDirection={sortDirection}
+              />
+              <div style={{ display: "flex", marginTop: 10 }}>
                 <Pagination
                   count={maxPage}
                   color="primary"
@@ -61,7 +82,7 @@ function App() {
                   }}
                 />
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>
