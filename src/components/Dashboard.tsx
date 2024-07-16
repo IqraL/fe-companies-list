@@ -3,6 +3,7 @@ import { Data } from "../App";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import { sic_codes } from "../assets/sic_codes";
 import { SortDirection, SortType } from "../types";
+import { colors } from "@mui/material";
 
 const rowStyle = {
   borderColor: "black",
@@ -21,7 +22,7 @@ const rowStyle = {
 };
 
 const headerStyle = {
-  backgroundColor: "#9b9b9b",
+  backgroundColor: "#1976d2",
   borderColor: "black",
   borderStyle: "solid",
   borderWidth: "1px",
@@ -37,6 +38,7 @@ const headerStyle = {
   lineHeight: "20px", // Ensures text is vertically centered
   boxSizing: "border-box", // Ensures padding and border are included in the height
   width: "180px",
+  color: "white"
 };
 
 export const Dashboard = ({
@@ -47,8 +49,8 @@ export const Dashboard = ({
   sortDirection,
 }: {
   data: Data[];
-  setSort: React.Dispatch<React.SetStateAction<SortType>>;
-  setSortDirection: React.Dispatch<React.SetStateAction<SortDirection>>;
+  setSort: (value: SortType) => void;
+  setSortDirection: (value: SortDirection) => void;
   sort: SortType;
   sortDirection: SortDirection;
 }) => {
@@ -60,6 +62,8 @@ export const Dashboard = ({
         justifyContent: "left",
         marginTop: "25px",
         marginLeft: "25px",
+        height: "95vh",
+        overflow: "auto"
       }}
     >
       <table

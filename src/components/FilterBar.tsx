@@ -30,21 +30,24 @@ const getBySicCodes = async ({
   const codes = selectedIndustries.map((si) => "" + si.value + "");
 
   try {
-    const response = await fetch("http://localhost:3000/filter_sec_codes", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        sic_codes: codes,
-        page,
-        pageSize: PAGE_SIZE,
-        isActive,
-        isDissolved,
-        sortDirection,
-        sort,
-      }),
-    });
+    const response = await fetch(
+      "http://api.companies-listing.com/filter_sec_codes",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sic_codes: codes,
+          page,
+          pageSize: PAGE_SIZE,
+          isActive,
+          isDissolved,
+          sortDirection,
+          sort,
+        }),
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

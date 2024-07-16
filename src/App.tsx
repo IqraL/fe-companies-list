@@ -53,17 +53,19 @@ function App() {
           style={{
             display: "flex",
             flexDirection: "column",
-            maxHeight: "60vh",
+            height: "95vh",
           }}
         >
           {!data.length ? (
-            <h1>Please select an industry</h1>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <h1>Please select an industry</h1>
+            </div>
           ) : (
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
-                minHeight: "60vh",
+                height: "95vh",
               }}
             >
               <Dashboard
